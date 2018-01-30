@@ -12,3 +12,5 @@ install/convert/convertor\.php
 install/convertors/convert_phpbb20\.php
 
 install/
+
+cache/
