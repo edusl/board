@@ -1,0 +1,38 @@
+<!-- IF .latest_announcements or .latest_hot_topics or .latest_topics -->
+
+	<ul class="topiclist bg1">
+
+			<table class="portal-module-postbody">
+			<tr class="menutitle">
+				<!-- IF .latest_announcements --><td class="portal-responsive-hide"><strong>{L_PORTAL_RECENT_ANN}</strong></td><!-- ENDIF -->
+				<!-- IF .latest_hot_topics --><td class="portal-responsive-hide"><strong>{L_PORTAL_RECENT_HOT_TOPIC}</strong></td><!-- ENDIF -->
+				<!-- IF .latest_topics --><td><strong>{L_PORTAL_RECENT_TOPIC}</strong></td><!-- ENDIF -->
+			</tr>
+			<tr>
+				<!-- IF .latest_announcements -->
+				<td class="row1 portal-responsive-hide portal-recent-column">
+					<span class="gensmall">
+					<!-- BEGIN latest_announcements -->
+								<a href="{latest_announcements.U_VIEW_TOPIC}" title="{latest_announcements.FULL_TITLE}">{latest_announcements.TITLE}</a>
+					<!-- END latest_announcements -->
+					</span>
+				</td>
+				<!-- ENDIF -->
+
+				<!-- IF .latest_topics -->
+				<li class="row1 portal-recent-column">
+					<span class="gensmall">
+					<!-- BEGIN latest_topics -->
+						<a href="{latest_topics.U_VIEW_TOPIC}" title="{latest_topics.FULL_TITLE}">{latest_topics.TITLE}</a>	{latest_topics.AUTHOR}
+
+					<!-- END latest_topics -->
+					</span>
+				</li>
+				<!-- ENDIF -->
+			</tr>
+			</table>
+
+	</ul>
+
+
+<!-- ENDIF -->

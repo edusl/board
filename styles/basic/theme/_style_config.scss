@@ -18,7 +18,7 @@ $profile-side:							left !default;	// left or right
 $post-margin:							($profile-width + 10px) !default;
 
 $use-wrapper:							false !default;	// true or false
-$max-width:								none !default;	// Maximum width. Set to "none" to make layout fluid
+$max-width:								900px !default;	// Maximum width. Set to "none" to make layout fluid
 
 $split-forums:							false !default;	// Changes layout of forums list. Values are true or false
 
@@ -28,7 +28,7 @@ $tabbed-navigation:						true !default;	// true or false. Toggles tabbed navigat
 // Fonts
 //
 
-$font-size:								11px !default;	// Base font size
+$font-size:								12px !default;	// Base font size
 $font-family:							Verdana, Helvetica, Arial, sans-serif !default;	// Default font
 $line-height:							1.4 !default;	// Line height
 
@@ -258,8 +258,8 @@ $button-icon:							#909090 !default;
 $button-icon-hover:						#006ac6 !default;
 $button-text:							$text-color !default;
 
-$button-top-padding:					2px !default;
-$button-side-padding:					8px !default;
+$button-top-padding:					5px !default;
+$button-side-padding:					10px !default;
 $button-border-width:					1px !default;
 $button-height:							$button-line-height + ($button-top-padding + $button-border-width) * 2 !default;
 
@@ -393,7 +393,7 @@ $post-side:								if($profile-side == left, right, left) !default;
 
 @mixin placeholder {
 	&::-moz-placeholder {
-		@content 
+		@content
 	}
 	&::-webkit-input-placeholder {
 		@content
