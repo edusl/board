@@ -1,0 +1,57 @@
+/* --------------------------------------------------------------
+	$Portal
+-------------------------------------------------------------- */
+
+#portal-body {
+	display: flex;
+}
+
+
+#portal-center {
+	border: 1px solid red;
+	flex-basis: 70%;
+}
+
+#portal-right {
+	border: 1px solid red;
+	flex-basis: 30%;
+
+}
+
+
+#news-block {
+	.new {
+		border: 1px solid green;
+		margin-bottom: 30px;
+
+		.title {
+			margin-bottom: 10px;
+		}
+
+		.content {
+			margin-bottom: 10px;
+		}
+	}
+}
+
+
+#recent-block {
+	.list {
+		list-style: none;
+		.list__item {
+
+			.list__link {
+				padding: 5px 5px 5px 0;
+				&:hover {
+					text-decoration: underline;
+					//background: #ccc;
+				}
+				span {
+					color: #ccc;
+				}
+			}
+		}
+
+
+	}
+}
