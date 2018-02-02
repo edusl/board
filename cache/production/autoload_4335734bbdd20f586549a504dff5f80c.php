@@ -6,3 +6,4 @@
  * by phpBB while loading the extensions.
  */
 
+require('./ext/board3/portal/vendor/autoload.php');

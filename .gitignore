@@ -15,4 +15,6 @@ install/
 
 cache/*
 
+cache/production/
+
 node_modules/*

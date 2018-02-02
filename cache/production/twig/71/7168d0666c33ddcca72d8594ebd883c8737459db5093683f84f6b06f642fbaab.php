@@ -22,6 +22,10 @@ class __TwigTemplate_db5acada04e7818a0ff543998e6a64d8ab9ab035852262b858448955a41
 
 ";
         // line 4
+        $previous_look_up_order = $this->env->getNamespaceLookUpOrder();
+        $this->env->setNamespaceLookUpOrder(array('board3_portal', '__main__'));
+        $this->env->loadTemplate('@board3_portal/event/overall_footer_page_body_after.html')->display($context);
+        $this->env->setNamespaceLookUpOrder($previous_look_up_order);
         // line 5
         echo "
 ";
@@ -189,7 +193,7 @@ class __TwigTemplate_db5acada04e7818a0ff543998e6a64d8ab9ab035852262b858448955a41
                 $local_file = $this->getEnvironment()->findTemplate($asset_path);
                 $asset->set_path($local_file, true);
             }
-            $asset->add_assets_version('2');
+            $asset->add_assets_version('3');
         }
         $this->getEnvironment()->get_assets_bag()->add_script($asset);        // line 55
         $asset_file = "ajax.js";
@@ -200,7 +204,7 @@ class __TwigTemplate_db5acada04e7818a0ff543998e6a64d8ab9ab035852262b858448955a41
                 $local_file = $this->getEnvironment()->findTemplate($asset_path);
                 $asset->set_path($local_file, true);
             }
-            $asset->add_assets_version('2');
+            $asset->add_assets_version('3');
         }
         $this->getEnvironment()->get_assets_bag()->add_script($asset);        // line 56
         if ((isset($context["S_ALLOW_CDN"]) ? $context["S_ALLOW_CDN"] : null)) {
@@ -270,10 +274,6 @@ class __TwigTemplate_db5acada04e7818a0ff543998e6a64d8ab9ab035852262b858448955a41
         echo "
 ";
         // line 94
-        $previous_look_up_order = $this->env->getNamespaceLookUpOrder();
-        $this->env->setNamespaceLookUpOrder(array('phpbb_viglink', '__main__'));
-        $this->env->loadTemplate('@phpbb_viglink/event/overall_footer_after.html')->display($context);
-        $this->env->setNamespaceLookUpOrder($previous_look_up_order);
         // line 95
         echo "
 ";
@@ -316,7 +316,7 @@ class __TwigTemplate_db5acada04e7818a0ff543998e6a64d8ab9ab035852262b858448955a41
 
     public function getDebugInfo()
     {
-        return array (  301 => 100,  300 => 99,  295 => 97,  281 => 96,  278 => 95,  273 => 94,  270 => 93,  262 => 88,  258 => 87,  254 => 86,  250 => 85,  230 => 71,  228 => 70,  225 => 69,  215 => 62,  208 => 57,  206 => 56,  195 => 55,  184 => 54,  177 => 53,  169 => 52,  165 => 51,  161 => 49,  157 => 48,  152 => 45,  148 => 43,  146 => 42,  129 => 30,  114 => 26,  110 => 24,  101 => 23,  95 => 22,  93 => 21,  88 => 20,  80 => 19,  75 => 18,  74 => 17,  70 => 15,  67 => 14,  54 => 13,  52 => 12,  48 => 10,  44 => 8,  31 => 7,  29 => 6,  26 => 5,  25 => 4,  21 => 2,  19 => 1,);
+        return array (  301 => 100,  300 => 99,  295 => 97,  281 => 96,  278 => 95,  277 => 94,  274 => 93,  266 => 88,  262 => 87,  258 => 86,  254 => 85,  234 => 71,  232 => 70,  229 => 69,  219 => 62,  212 => 57,  210 => 56,  199 => 55,  188 => 54,  181 => 53,  173 => 52,  169 => 51,  165 => 49,  161 => 48,  156 => 45,  152 => 43,  150 => 42,  133 => 30,  118 => 26,  114 => 24,  105 => 23,  99 => 22,  97 => 21,  92 => 20,  84 => 19,  79 => 18,  78 => 17,  74 => 15,  71 => 14,  58 => 13,  56 => 12,  52 => 10,  48 => 8,  35 => 7,  33 => 6,  30 => 5,  25 => 4,  21 => 2,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */

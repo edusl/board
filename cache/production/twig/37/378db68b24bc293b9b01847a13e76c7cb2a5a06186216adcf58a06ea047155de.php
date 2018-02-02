@@ -46,6 +46,10 @@ class __TwigTemplate_d1d718ea2e12897358a981623a5dccf20882114ef123301eb749904d08a
         }
         // line 15
         echo "\t\t\t";
+        $previous_look_up_order = $this->env->getNamespaceLookUpOrder();
+        $this->env->setNamespaceLookUpOrder(array('board3_portal', '__main__'));
+        $this->env->loadTemplate('@board3_portal/event/overall_footer_breadcrumb_prepend.html')->display($context);
+        $this->env->setNamespaceLookUpOrder($previous_look_up_order);
         // line 16
         echo "\t\t\t";
         ob_start();
@@ -211,7 +215,7 @@ class __TwigTemplate_d1d718ea2e12897358a981623a5dccf20882114ef123301eb749904d08a
 
     public function getDebugInfo()
     {
-        return array (  195 => 66,  188 => 62,  184 => 61,  181 => 60,  178 => 59,  176 => 58,  169 => 54,  165 => 53,  162 => 52,  159 => 51,  157 => 50,  154 => 49,  147 => 45,  141 => 44,  138 => 43,  136 => 42,  130 => 39,  126 => 38,  123 => 37,  120 => 36,  119 => 35,  114 => 34,  113 => 33,  110 => 32,  97 => 28,  81 => 27,  78 => 26,  76 => 25,  73 => 24,  71 => 23,  60 => 19,  56 => 18,  53 => 17,  50 => 16,  48 => 15,  45 => 14,  38 => 10,  34 => 9,  31 => 8,  28 => 7,  26 => 6,  19 => 1,);
+        return array (  199 => 66,  192 => 62,  188 => 61,  185 => 60,  182 => 59,  180 => 58,  173 => 54,  169 => 53,  166 => 52,  163 => 51,  161 => 50,  158 => 49,  151 => 45,  145 => 44,  142 => 43,  140 => 42,  134 => 39,  130 => 38,  127 => 37,  124 => 36,  123 => 35,  118 => 34,  117 => 33,  114 => 32,  101 => 28,  85 => 27,  82 => 26,  80 => 25,  77 => 24,  75 => 23,  64 => 19,  60 => 18,  57 => 17,  54 => 16,  48 => 15,  45 => 14,  38 => 10,  34 => 9,  31 => 8,  28 => 7,  26 => 6,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
