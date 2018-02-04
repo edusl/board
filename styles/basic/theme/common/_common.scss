@@ -102,13 +102,12 @@ h2.solo {
 	margin-bottom: 1em;
 }
 
-$h3-font-size:			($h2-font-size - 2px) !default;
-$h3-font-family:		$h2-font-family !default;
+
 
 h3 {
 	// Sub-headers (also used as post headers, but defined later)
 	font-family: $h3-font-family;
-	font-weight: 500;
+	font-weight: 600;
 	margin-bottom: 5px;
 	font-size: $h3-font-size;
 	margin-top: 20px;
@@ -302,7 +301,7 @@ ol ol ul, ol ul ul, ul ol ul, ul ul ul {
 	}
 
 	@if $show-forum-title == false {
-		h1, p {
+		p {
 			display: none;
 		}
 	}
@@ -905,7 +904,6 @@ $nav-alert-font-size:		9px !default;
 				font-size: $nav-secondary-font-size;
 				z-index: 2;
 				position: relative;
-				margin: 0 0 10px;
 				padding: 2px 5px;
 
 				@media (max-width: 700px) {

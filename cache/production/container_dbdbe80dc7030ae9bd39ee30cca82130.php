@@ -49,6 +49,43 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
             'avatar.driver.upload' => 'getAvatar_Driver_UploadService',
             'avatar.driver_collection' => 'getAvatar_DriverCollectionService',
             'avatar.manager' => 'getAvatar_ManagerService',
+            'board3.portal.columns' => 'getBoard3_Portal_ColumnsService',
+            'board3.portal.controller_helper' => 'getBoard3_Portal_ControllerHelperService',
+            'board3.portal.fetch_posts' => 'getBoard3_Portal_FetchPostsService',
+            'board3.portal.helper' => 'getBoard3_Portal_HelperService',
+            'board3.portal.listener' => 'getBoard3_Portal_ListenerService',
+            'board3.portal.main' => 'getBoard3_Portal_MainService',
+            'board3.portal.module.announcements' => 'getBoard3_Portal_Module_AnnouncementsService',
+            'board3.portal.module.attachments' => 'getBoard3_Portal_Module_AttachmentsService',
+            'board3.portal.module.birthday_list' => 'getBoard3_Portal_Module_BirthdayListService',
+            'board3.portal.module.calendar' => 'getBoard3_Portal_Module_CalendarService',
+            'board3.portal.module.clock' => 'getBoard3_Portal_Module_ClockService',
+            'board3.portal.module.custom' => 'getBoard3_Portal_Module_CustomService',
+            'board3.portal.module.donation' => 'getBoard3_Portal_Module_DonationService',
+            'board3.portal.module.forumlist' => 'getBoard3_Portal_Module_ForumlistService',
+            'board3.portal.module.friends' => 'getBoard3_Portal_Module_FriendsService',
+            'board3.portal.module.latest_bots' => 'getBoard3_Portal_Module_LatestBotsService',
+            'board3.portal.module.latest_members' => 'getBoard3_Portal_Module_LatestMembersService',
+            'board3.portal.module.leaders' => 'getBoard3_Portal_Module_LeadersService',
+            'board3.portal.module.link_us' => 'getBoard3_Portal_Module_LinkUsService',
+            'board3.portal.module.links' => 'getBoard3_Portal_Module_LinksService',
+            'board3.portal.module.main_menu' => 'getBoard3_Portal_Module_MainMenuService',
+            'board3.portal.module.news' => 'getBoard3_Portal_Module_NewsService',
+            'board3.portal.module.poll' => 'getBoard3_Portal_Module_PollService',
+            'board3.portal.module.random_member' => 'getBoard3_Portal_Module_RandomMemberService',
+            'board3.portal.module.recent' => 'getBoard3_Portal_Module_RecentService',
+            'board3.portal.module.search' => 'getBoard3_Portal_Module_SearchService',
+            'board3.portal.module.statistics' => 'getBoard3_Portal_Module_StatisticsService',
+            'board3.portal.module.stylechanger' => 'getBoard3_Portal_Module_StylechangerService',
+            'board3.portal.module.topposters' => 'getBoard3_Portal_Module_ToppostersService',
+            'board3.portal.module.user_menu' => 'getBoard3_Portal_Module_UserMenuService',
+            'board3.portal.module.welcome' => 'getBoard3_Portal_Module_WelcomeService',
+            'board3.portal.module.whois_online' => 'getBoard3_Portal_Module_WhoisOnlineService',
+            'board3.portal.module_collection' => 'getBoard3_Portal_ModuleCollectionService',
+            'board3.portal.modules.constraints_handler' => 'getBoard3_Portal_Modules_ConstraintsHandlerService',
+            'board3.portal.modules.database_handler' => 'getBoard3_Portal_Modules_DatabaseHandlerService',
+            'board3.portal.modules.manager' => 'getBoard3_Portal_Modules_ManagerService',
+            'board3.portal.modules_helper' => 'getBoard3_Portal_ModulesHelperService',
             'cache' => 'getCacheService',
             'cache.driver' => 'getCache_DriverService',
             'captcha.factory' => 'getCaptcha_FactoryService',
@@ -581,6 +618,405 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
     protected function getAvatar_ManagerService()
     {
         return $this->services['avatar.manager'] = new \phpbb\avatar\manager($this->get('config'), $this->get('avatar.driver_collection'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.columns' shared service.
+     *
+     * @return \board3\portal\portal\columns
+     */
+    protected function getBoard3_Portal_ColumnsService()
+    {
+        return $this->services['board3.portal.columns'] = new \board3\portal\portal\columns();
+    }
+
+    /**
+     * Gets the public 'board3.portal.controller_helper' shared service.
+     *
+     * @return \board3\portal\controller\helper
+     */
+    protected function getBoard3_Portal_ControllerHelperService()
+    {
+        return $this->services['board3.portal.controller_helper'] = new \board3\portal\controller\helper($this->get('auth'), $this->get('board3.portal.columns'), $this->get('config'), $this->get('template'), $this->get('user'), $this->get('path_helper'), $this->get('board3.portal.helper'), './../', '.php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.fetch_posts' shared service.
+     *
+     * @return \board3\portal\portal\fetch_posts
+     */
+    protected function getBoard3_Portal_FetchPostsService()
+    {
+        return $this->services['board3.portal.fetch_posts'] = new \board3\portal\portal\fetch_posts($this->get('auth'), $this->get('cache'), $this->get('config'), $this->get('dbal.conn'), $this->get('board3.portal.modules_helper'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.helper' shared service.
+     *
+     * @return \board3\portal\includes\helper
+     */
+    protected function getBoard3_Portal_HelperService()
+    {
+        return $this->services['board3.portal.helper'] = new \board3\portal\includes\helper($this->get('board3.portal.module_collection'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.listener' shared service.
+     *
+     * @return \board3\portal\event\listener
+     */
+    protected function getBoard3_Portal_ListenerService()
+    {
+        return $this->services['board3.portal.listener'] = new \board3\portal\event\listener($this->get('board3.portal.main'), $this->get('auth'), $this->get('config'), $this->get('controller.helper'), $this->get('path_helper'), $this->get('template'), $this->get('user'), 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.main' shared service.
+     *
+     * @return \board3\portal\controller\main
+     */
+    protected function getBoard3_Portal_MainService()
+    {
+        return $this->services['board3.portal.main'] = new \board3\portal\controller\main($this->get('board3.portal.columns'), $this->get('config'), $this->get('board3.portal.controller_helper'), $this->get('template'), $this->get('user'), $this->get('path_helper'), './../', '.php', 'phpbb_portal_config', 'phpbb_portal_modules');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.announcements' shared service.
+     *
+     * @return \board3\portal\modules\announcements
+     */
+    protected function getBoard3_Portal_Module_AnnouncementsService()
+    {
+        return $this->services['board3.portal.module.announcements'] = new \board3\portal\modules\announcements($this->get('auth'), $this->get('cache'), $this->get('config'), $this->get('template'), $this->get('dbal.conn'), $this->get('pagination'), $this->get('board3.portal.modules_helper'), $this->get('request'), 'php', './../', $this->get('user'), $this->get('board3.portal.fetch_posts'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.attachments' shared service.
+     *
+     * @return \board3\portal\modules\attachments
+     */
+    protected function getBoard3_Portal_Module_AttachmentsService()
+    {
+        return $this->services['board3.portal.module.attachments'] = new \board3\portal\modules\attachments($this->get('auth'), $this->get('config'), $this->get('board3.portal.modules_helper'), $this->get('template'), $this->get('dbal.conn'), $this->get('request'), 'php', './../', $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.birthday_list' shared service.
+     *
+     * @return \board3\portal\modules\birthday_list
+     */
+    protected function getBoard3_Portal_Module_BirthdayListService()
+    {
+        return $this->services['board3.portal.module.birthday_list'] = new \board3\portal\modules\birthday_list($this->get('config'), $this->get('template'), $this->get('dbal.conn'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.calendar' shared service.
+     *
+     * @return \board3\portal\modules\calendar
+     */
+    protected function getBoard3_Portal_Module_CalendarService()
+    {
+        return $this->services['board3.portal.module.calendar'] = new \board3\portal\modules\calendar($this->get('config'), $this->get('board3.portal.modules_helper'), $this->get('template'), $this->get('dbal.conn'), $this->get('request'), './../', 'php', $this->get('user'), $this->get('path_helper'), $this->get('log'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.clock' shared service.
+     *
+     * @return \board3\portal\modules\clock
+     */
+    protected function getBoard3_Portal_Module_ClockService()
+    {
+        return $this->services['board3.portal.module.clock'] = new \board3\portal\modules\clock($this->get('config'), $this->get('template'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.custom' shared service.
+     *
+     * @return \board3\portal\modules\custom
+     */
+    protected function getBoard3_Portal_Module_CustomService()
+    {
+        return $this->services['board3.portal.module.custom'] = new \board3\portal\modules\custom($this->get('config'), $this->get('template'), $this->get('dbal.conn'), $this->get('request'), './../', 'php', $this->get('user'), $this->get('log'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.donation' shared service.
+     *
+     * @return \board3\portal\modules\donation
+     */
+    protected function getBoard3_Portal_Module_DonationService()
+    {
+        return $this->services['board3.portal.module.donation'] = new \board3\portal\modules\donation($this->get('config'), $this->get('request'), $this->get('template'), $this->get('user'), $this->get('board3.portal.modules_helper'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.forumlist' shared service.
+     *
+     * @return \board3\portal\modules\forumlist
+     */
+    protected function getBoard3_Portal_Module_ForumlistService()
+    {
+        return $this->services['board3.portal.module.forumlist'] = new \board3\portal\modules\forumlist($this->get('auth'), $this->get('config'), $this->get('template'), './../', 'php', $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.friends' shared service.
+     *
+     * @return \board3\portal\modules\friends
+     */
+    protected function getBoard3_Portal_Module_FriendsService()
+    {
+        return $this->services['board3.portal.module.friends'] = new \board3\portal\modules\friends($this->get('auth'), $this->get('config'), $this->get('dbal.conn'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.latest_bots' shared service.
+     *
+     * @return \board3\portal\modules\latest_bots
+     */
+    protected function getBoard3_Portal_Module_LatestBotsService()
+    {
+        return $this->services['board3.portal.module.latest_bots'] = new \board3\portal\modules\latest_bots($this->get('config'), $this->get('dbal.conn'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.latest_members' shared service.
+     *
+     * @return \board3\portal\modules\latest_members
+     */
+    protected function getBoard3_Portal_Module_LatestMembersService()
+    {
+        return $this->services['board3.portal.module.latest_members'] = new \board3\portal\modules\latest_members($this->get('config'), $this->get('dbal.conn'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.leaders' shared service.
+     *
+     * @return \board3\portal\modules\leaders
+     */
+    protected function getBoard3_Portal_Module_LeadersService()
+    {
+        return $this->services['board3.portal.module.leaders'] = new \board3\portal\modules\leaders($this->get('auth'), $this->get('config'), $this->get('dbal.conn'), $this->get('template'), './../', 'php', $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.link_us' shared service.
+     *
+     * @return \board3\portal\modules\link_us
+     */
+    protected function getBoard3_Portal_Module_LinkUsService()
+    {
+        return $this->services['board3.portal.module.link_us'] = new \board3\portal\modules\link_us($this->get('config'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.links' shared service.
+     *
+     * @return \board3\portal\modules\links
+     */
+    protected function getBoard3_Portal_Module_LinksService()
+    {
+        return $this->services['board3.portal.module.links'] = new \board3\portal\modules\links($this->get('config'), $this->get('dbal.conn'), $this->get('request'), $this->get('template'), './../', 'php', $this->get('user'), $this->get('log'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.main_menu' shared service.
+     *
+     * @return \board3\portal\modules\main_menu
+     */
+    protected function getBoard3_Portal_Module_MainMenuService()
+    {
+        return $this->services['board3.portal.module.main_menu'] = new \board3\portal\modules\main_menu($this->get('config'), $this->get('dbal.conn'), $this->get('request'), $this->get('template'), './../', 'php', $this->get('user'), $this->get('log'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.news' shared service.
+     *
+     * @return \board3\portal\modules\news
+     */
+    protected function getBoard3_Portal_Module_NewsService()
+    {
+        return $this->services['board3.portal.module.news'] = new \board3\portal\modules\news($this->get('auth'), $this->get('cache'), $this->get('config'), $this->get('dbal.conn'), $this->get('pagination'), $this->get('board3.portal.modules_helper'), $this->get('request'), $this->get('template'), './../', 'php', $this->get('user'), $this->get('board3.portal.fetch_posts'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.poll' shared service.
+     *
+     * @return \board3\portal\modules\poll
+     */
+    protected function getBoard3_Portal_Module_PollService()
+    {
+        return $this->services['board3.portal.module.poll'] = new \board3\portal\modules\poll($this->get('auth'), $this->get('config'), $this->get('dbal.conn'), $this->get('request'), $this->get('template'), './../', 'php', $this->get('user'), $this->get('board3.portal.modules_helper'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.random_member' shared service.
+     *
+     * @return \board3\portal\modules\random_member
+     */
+    protected function getBoard3_Portal_Module_RandomMemberService()
+    {
+        return $this->services['board3.portal.module.random_member'] = new \board3\portal\modules\random_member($this->get('dbal.conn'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.recent' shared service.
+     *
+     * @return \board3\portal\modules\recent
+     */
+    protected function getBoard3_Portal_Module_RecentService()
+    {
+        return $this->services['board3.portal.module.recent'] = new \board3\portal\modules\recent($this->get('auth'), $this->get('config'), $this->get('dbal.conn'), $this->get('request'), $this->get('template'), './../', 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.search' shared service.
+     *
+     * @return \board3\portal\modules\search
+     */
+    protected function getBoard3_Portal_Module_SearchService()
+    {
+        return $this->services['board3.portal.module.search'] = new \board3\portal\modules\search($this->get('template'), 'php', './../');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.statistics' shared service.
+     *
+     * @return \board3\portal\modules\statistics
+     */
+    protected function getBoard3_Portal_Module_StatisticsService()
+    {
+        return $this->services['board3.portal.module.statistics'] = new \board3\portal\modules\statistics($this->get('cache'), $this->get('config'), $this->get('dbal.conn'), $this->get('template'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.stylechanger' shared service.
+     *
+     * @return \board3\portal\modules\stylechanger
+     */
+    protected function getBoard3_Portal_Module_StylechangerService()
+    {
+        return $this->services['board3.portal.module.stylechanger'] = new \board3\portal\modules\stylechanger($this->get('config'), $this->get('board3.portal.modules_helper'), $this->get('template'), $this->get('dbal.conn'), $this->get('request'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.topposters' shared service.
+     *
+     * @return \board3\portal\modules\topposters
+     */
+    protected function getBoard3_Portal_Module_ToppostersService()
+    {
+        return $this->services['board3.portal.module.topposters'] = new \board3\portal\modules\topposters($this->get('config'), $this->get('dbal.conn'), $this->get('template'), './../', 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.user_menu' shared service.
+     *
+     * @return \board3\portal\modules\user_menu
+     */
+    protected function getBoard3_Portal_Module_UserMenuService()
+    {
+        return $this->services['board3.portal.module.user_menu'] = new \board3\portal\modules\user_menu($this->get('auth'), $this->get('config'), $this->get('controller.helper'), $this->get('dbal.conn'), $this->get('path_helper'), $this->get('template'), $this->get('user'), './../', 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.welcome' shared service.
+     *
+     * @return \board3\portal\modules\welcome
+     */
+    protected function getBoard3_Portal_Module_WelcomeService()
+    {
+        return $this->services['board3.portal.module.welcome'] = new \board3\portal\modules\welcome($this->get('config'), $this->get('request'), $this->get('template'), $this->get('user'), './../', 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module.whois_online' shared service.
+     *
+     * @return \board3\portal\modules\whois_online
+     */
+    protected function getBoard3_Portal_Module_WhoisOnlineService()
+    {
+        return $this->services['board3.portal.module.whois_online'] = new \board3\portal\modules\whois_online($this->get('auth'), $this->get('config'), $this->get('dbal.conn'), $this->get('template'), $this->get('user'), './../', 'php');
+    }
+
+    /**
+     * Gets the public 'board3.portal.module_collection' shared service.
+     *
+     * @return \phpbb\di\service_collection
+     */
+    protected function getBoard3_Portal_ModuleCollectionService()
+    {
+        $this->services['board3.portal.module_collection'] = $instance = new \phpbb\di\service_collection($this);
+
+        $instance->add('board3.portal.module.announcements');
+        $instance->add('board3.portal.module.attachments');
+        $instance->add('board3.portal.module.birthday_list');
+        $instance->add('board3.portal.module.calendar');
+        $instance->add('board3.portal.module.clock');
+        $instance->add('board3.portal.module.custom');
+        $instance->add('board3.portal.module.donation');
+        $instance->add('board3.portal.module.forumlist');
+        $instance->add('board3.portal.module.friends');
+        $instance->add('board3.portal.module.latest_bots');
+        $instance->add('board3.portal.module.latest_members');
+        $instance->add('board3.portal.module.leaders');
+        $instance->add('board3.portal.module.link_us');
+        $instance->add('board3.portal.module.links');
+        $instance->add('board3.portal.module.main_menu');
+        $instance->add('board3.portal.module.news');
+        $instance->add('board3.portal.module.poll');
+        $instance->add('board3.portal.module.random_member');
+        $instance->add('board3.portal.module.recent');
+        $instance->add('board3.portal.module.search');
+        $instance->add('board3.portal.module.statistics');
+        $instance->add('board3.portal.module.stylechanger');
+        $instance->add('board3.portal.module.topposters');
+        $instance->add('board3.portal.module.user_menu');
+        $instance->add('board3.portal.module.welcome');
+        $instance->add('board3.portal.module.whois_online');
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'board3.portal.modules.constraints_handler' shared service.
+     *
+     * @return \board3\portal\portal\modules\constraints_handler
+     */
+    protected function getBoard3_Portal_Modules_ConstraintsHandlerService()
+    {
+        return $this->services['board3.portal.modules.constraints_handler'] = new \board3\portal\portal\modules\constraints_handler($this->get('board3.portal.columns'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.modules.database_handler' shared service.
+     *
+     * @return \board3\portal\portal\modules\database_handler
+     */
+    protected function getBoard3_Portal_Modules_DatabaseHandlerService()
+    {
+        return $this->services['board3.portal.modules.database_handler'] = new \board3\portal\portal\modules\database_handler($this->get('dbal.conn'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.modules.manager' shared service.
+     *
+     * @return \board3\portal\portal\modules\manager
+     */
+    protected function getBoard3_Portal_Modules_ManagerService()
+    {
+        return $this->services['board3.portal.modules.manager'] = new \board3\portal\portal\modules\manager($this->get('cache'), $this->get('dbal.conn'), $this->get('board3.portal.controller_helper'), $this->get('board3.portal.columns'), $this->get('board3.portal.helper'), $this->get('board3.portal.modules.constraints_handler'), $this->get('board3.portal.modules.database_handler'), $this->get('request'), $this->get('user'));
+    }
+
+    /**
+     * Gets the public 'board3.portal.modules_helper' shared service.
+     *
+     * @return \board3\portal\includes\modules_helper
+     */
+    protected function getBoard3_Portal_ModulesHelperService()
+    {
+        return $this->services['board3.portal.modules_helper'] = new \board3\portal\includes\modules_helper($this->get('auth'), $this->get('config'), $this->get('controller.helper'), $this->get('request'));
     }
 
     /**
@@ -1546,6 +1982,7 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
     {
         $this->services['dispatcher'] = $instance = new \phpbb\event\dispatcher($this);
 
+        $instance->addSubscriberService('board3.portal.listener', 'board3\\portal\\event\\listener');
         $instance->addSubscriberService('phpbb.viglink.listener', 'phpbb\\viglink\\event\\listener');
         $instance->addSubscriberService('phpbb.viglink.acp_listener', 'phpbb\\viglink\\event\\acp_listener');
         $instance->addSubscriberService('console.exception_subscriber', 'phpbb\\console\\exception_subscriber');
@@ -3112,7 +3549,7 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
         if ($lazyLoad) {
             $container = $this;
 
-            return $this->services['template.twig.lexer'] = new phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439(
+            return $this->services['template.twig.lexer'] = new phpbbtemplatetwiglexer_0000000022e4c4620000000043355909(
                 function (&$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface $proxy) use ($container) {
                     $wrappedInstance = $container->getTemplate_Twig_LexerService(false);
 
@@ -3605,6 +4042,8 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
                 3 => 'passwords.driver.phpass',
             ),
             'debug.exceptions' => false,
+            'board3.portal.config.table' => 'phpbb_portal_config',
+            'board3.portal.modules.table' => 'phpbb_portal_modules',
             'core.adm_relative_path' => 'adm/',
             'core.table_prefix' => 'phpbb_',
             'cache.driver.class' => 'phpbb\\cache\\driver\\file',
@@ -3613,23 +4052,23 @@ class phpbb_cache_container extends Symfony\Component\DependencyInjection\Contai
     }
 }
 
-class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\template\twig\lexer implements \ProxyManager\Proxy\VirtualProxyInterface
+class phpbbtemplatetwiglexer_0000000022e4c4620000000043355909 extends \phpbb\template\twig\lexer implements \ProxyManager\Proxy\VirtualProxyInterface
 {
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $valueHolder5a70a55e727d2088729429 = null;
+    private $valueHolder5a74aa8e7a7f5816681710 = null;
 
     /**
      * @var \Closure|null initializer responsible for generating the wrapped object
      */
-    private $initializer5a70a55e727e0894304627 = null;
+    private $initializer5a74aa8e7a80a350059833 = null;
 
     /**
      * @var bool[] map of public properties of the parent class
      */
-    private static $publicProperties5a70a55e727a0156590733 = array(
+    private static $publicProperties5a74aa8e7a7bc259328651 = array(
         
     );
 
@@ -3638,9 +4077,9 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function set_environment(\Twig_Environment $env)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, 'set_environment', array('env' => $env), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, 'set_environment', array('env' => $env), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        return $this->valueHolder5a70a55e727d2088729429->set_environment($env);
+        return $this->valueHolder5a74aa8e7a7f5816681710->set_environment($env);
     }
 
     /**
@@ -3648,9 +4087,9 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function tokenize($code, $filename = null)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, 'tokenize', array('code' => $code, 'filename' => $filename), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, 'tokenize', array('code' => $code, 'filename' => $filename), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        return $this->valueHolder5a70a55e727d2088729429->tokenize($code, $filename);
+        return $this->valueHolder5a74aa8e7a7f5816681710->tokenize($code, $filename);
     }
 
     /**
@@ -3658,9 +4097,9 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function fix_begin_tokens($code, $parent_nodes = array())
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, 'fix_begin_tokens', array('code' => $code, 'parent_nodes' => $parent_nodes), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, 'fix_begin_tokens', array('code' => $code, 'parent_nodes' => $parent_nodes), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        return $this->valueHolder5a70a55e727d2088729429->fix_begin_tokens($code, $parent_nodes);
+        return $this->valueHolder5a74aa8e7a7f5816681710->fix_begin_tokens($code, $parent_nodes);
     }
 
     /**
@@ -3670,7 +4109,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function __construct($initializer)
     {
-        $this->initializer5a70a55e727e0894304627 = $initializer;
+        $this->initializer5a74aa8e7a80a350059833 = $initializer;
     }
 
     /**
@@ -3678,16 +4117,16 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function & __get($name)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__get', array('name' => $name), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__get', array('name' => $name), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        if (isset(self::$publicProperties5a70a55e727a0156590733[$name])) {
-            return $this->valueHolder5a70a55e727d2088729429->$name;
+        if (isset(self::$publicProperties5a74aa8e7a7bc259328651[$name])) {
+            return $this->valueHolder5a74aa8e7a7f5816681710->$name;
         }
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder5a70a55e727d2088729429;
+            $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
 
             $backtrace = debug_backtrace(false);
             trigger_error('Undefined property: ' . get_parent_class($this) . '::$' . $name . ' in ' . $backtrace[0]['file'] . ' on line ' . $backtrace[0]['line'], \E_USER_NOTICE);
@@ -3695,7 +4134,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
             return;
         }
 
-        $targetObject = $this->valueHolder5a70a55e727d2088729429;
+        $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
         $accessor = function & () use ($targetObject, $name) {
             return $targetObject->$name;
         };
@@ -3713,18 +4152,18 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function __set($name, $value)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__set', array('name' => $name, 'value' => $value), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder5a70a55e727d2088729429;
+            $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
 
             return $targetObject->$name = $value;;
             return;
         }
 
-        $targetObject = $this->valueHolder5a70a55e727d2088729429;
+        $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
         $accessor = function & () use ($targetObject, $name, $value) {
             return $targetObject->$name = $value;
         };
@@ -3741,18 +4180,18 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function __isset($name)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__isset', array('name' => $name), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__isset', array('name' => $name), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder5a70a55e727d2088729429;
+            $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
 
             return isset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder5a70a55e727d2088729429;
+        $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
         $accessor = function () use ($targetObject, $name) {
             return isset($targetObject->$name);
         };
@@ -3769,18 +4208,18 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function __unset($name)
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__unset', array('name' => $name), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__unset', array('name' => $name), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
         $realInstanceReflection = new \ReflectionClass(get_parent_class($this));
 
         if (! $realInstanceReflection->hasProperty($name)) {
-            $targetObject = $this->valueHolder5a70a55e727d2088729429;
+            $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
 
             unset($targetObject->$name);;
             return;
         }
 
-        $targetObject = $this->valueHolder5a70a55e727d2088729429;
+        $targetObject = $this->valueHolder5a74aa8e7a7f5816681710;
         $accessor = function () use ($targetObject, $name) {
             unset($targetObject->$name);
         };
@@ -3794,16 +4233,16 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
 
     public function __clone()
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__clone', array(), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__clone', array(), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        $this->valueHolder5a70a55e727d2088729429 = clone $this->valueHolder5a70a55e727d2088729429;
+        $this->valueHolder5a74aa8e7a7f5816681710 = clone $this->valueHolder5a74aa8e7a7f5816681710;
     }
 
     public function __sleep()
     {
-        $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, '__sleep', array(), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, '__sleep', array(), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
 
-        return array('valueHolder5a70a55e727d2088729429');
+        return array('valueHolder5a74aa8e7a7f5816681710');
     }
 
     public function __wakeup()
@@ -3815,7 +4254,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function setProxyInitializer(\Closure $initializer = null)
     {
-        $this->initializer5a70a55e727e0894304627 = $initializer;
+        $this->initializer5a74aa8e7a80a350059833 = $initializer;
     }
 
     /**
@@ -3823,7 +4262,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function getProxyInitializer()
     {
-        return $this->initializer5a70a55e727e0894304627;
+        return $this->initializer5a74aa8e7a80a350059833;
     }
 
     /**
@@ -3831,7 +4270,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function initializeProxy()
     {
-        return $this->initializer5a70a55e727e0894304627 && ($this->initializer5a70a55e727e0894304627->__invoke($valueHolder5a70a55e727d2088729429, $this, 'initializeProxy', array(), $this->initializer5a70a55e727e0894304627) || 1) && $this->valueHolder5a70a55e727d2088729429 = $valueHolder5a70a55e727d2088729429;
+        return $this->initializer5a74aa8e7a80a350059833 && ($this->initializer5a74aa8e7a80a350059833->__invoke($valueHolder5a74aa8e7a7f5816681710, $this, 'initializeProxy', array(), $this->initializer5a74aa8e7a80a350059833) || 1) && $this->valueHolder5a74aa8e7a7f5816681710 = $valueHolder5a74aa8e7a7f5816681710;
     }
 
     /**
@@ -3839,7 +4278,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function isProxyInitialized()
     {
-        return null !== $this->valueHolder5a70a55e727d2088729429;
+        return null !== $this->valueHolder5a74aa8e7a7f5816681710;
     }
 
     /**
@@ -3847,7 +4286,7 @@ class phpbbtemplatetwiglexer_000000002a98a06b00007fa305972439 extends \phpbb\tem
      */
     public function getWrappedValueHolderValue()
     {
-        return $this->valueHolder5a70a55e727d2088729429;
+        return $this->valueHolder5a74aa8e7a7f5816681710;
     }
 
 

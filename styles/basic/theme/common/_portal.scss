@@ -2,30 +2,62 @@
 	$Portal
 -------------------------------------------------------------- */
 
+.invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+
+#page-header {
+	margin-bottom: 5px;
+	height: 150px;
+	text-align: left;
+	background: red;
+}
+
+#site-description {
+	//background: url('../../../images/top/rm-esc.png') no-repeat;
+	height: 120px;
+}
+
 #portal-body {
 	display: flex;
 }
 
 
 #portal-center {
-	border: 1px solid red;
 	flex-basis: 70%;
+	padding-right: 10px;
 }
 
 #portal-right {
-	border: 1px solid red;
 	flex-basis: 30%;
 
 }
 
 
-#news-block {
+.news-block {
+	.news-block__title {
+		@extend .invisible;
+	}
+
 	.new {
-		border: 1px solid green;
+		box-shadow: 0 0 2px #ccc;
 		margin-bottom: 30px;
+		padding: 5px;
+		text-align: center;
+		background: white;
 
 		.title {
 			margin-bottom: 10px;
+			background-color: $primary-color;
+			padding: 5px 3px;
+
+
+			a {
+				color: #f5e386;
+			}
 		}
 
 		.content {
@@ -35,7 +67,11 @@
 }
 
 
-#recent-block {
+.recent-block {
+	.recent-block__title {
+		@extend .invisible;
+	}
+
 	.list {
 		list-style: none;
 		.list__item {

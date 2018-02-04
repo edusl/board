@@ -101,17 +101,30 @@ class phpbb_url_matcher extends Symfony\Component\Routing\Matcher\UrlMatcher
             }
             not_phpbb_report_pm_controller:
 
-            // phpbb_report_post_controller
-            if (0 === strpos($pathinfo, '/post') && preg_match('#^/post/(?P<id>\\d+)/report$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
-                    goto not_phpbb_report_post_controller;
+            if (0 === strpos($pathinfo, '/po')) {
+                // phpbb_report_post_controller
+                if (0 === strpos($pathinfo, '/post') && preg_match('#^/post/(?P<id>\\d+)/report$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                        goto not_phpbb_report_post_controller;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'phpbb_report_post_controller')), array (  '_controller' => 'phpbb.report.controller:handle',  'mode' => 'post',));
+                }
+                not_phpbb_report_post_controller:
+
+                // board3_portal_controller
+                if ('/portal' === $pathinfo) {
+                    return array (  '_controller' => 'board3.portal.main:handle',  '_route' => 'board3_portal_controller',);
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'phpbb_report_post_controller')), array (  '_controller' => 'phpbb.report.controller:handle',  'mode' => 'post',));
             }
-            not_phpbb_report_post_controller:
 
+        }
+
+        // board3_portal_redirect_controller
+        if ('/' === $pathinfo) {
+            return array (  '_controller' => 'board3.portal.main:handle',  '_route' => 'board3_portal_redirect_controller',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
